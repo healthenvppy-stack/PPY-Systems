@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 
-    <h3 class="mb-3">แก้ไขข้อมูลประชาชน</h3>
+    <h3 class="mb-3">แก้ไขข้อมูลครัวเรือน</h3>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -18,17 +18,15 @@
 
     <div class="card">
         <div class="card-body">
-
-            <form method="POST" action="{{ route('citizens.update', $citizen) }}">
+            <form method="POST" action="{{ route('households.update', $household) }}">
                 @csrf
                 @method('PUT')
 
-                @include('citizens.form')
+                @include('households.form')
 
                 <button class="btn btn-success">บันทึกการแก้ไข</button>
-                <a href="{{ route('citizens.index') }}" class="btn btn-secondary">ยกเลิก</a>
+                <a href="{{ route('households.index') }}" class="btn btn-secondary">ยกเลิก</a>
             </form>
-
         </div>
     </div>
 

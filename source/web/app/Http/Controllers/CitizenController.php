@@ -78,7 +78,25 @@ class CitizenController extends Controller
 
     public function update(Citizen $citizen)
     {
-        //
+        request()->validate([
+            'cid' => 'required|digits:13|unique:citizens,cid,' . $citizen->id,
+            'first_name' => 'required|max:100',
+            'last_name' => 'nullable|max:100',
+            'gender' => 'required',
+            'birth_date' => 'nullable|date',
+        ]);
+
+        $citizen->update(request()->only([
+            'cid',
+            'first_name',
+            'last_name',
+            'gender',
+            'birth_date',
+        ]));
+
+        return redirect()
+            ->route('citizens.index')
+            ->with('success', 'แก้ไขข้อมูลประชาชนเรียบร้อยแล้ว');
     }
 
     public function destroy(Citizen $citizen)

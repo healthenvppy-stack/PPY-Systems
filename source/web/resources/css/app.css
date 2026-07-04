@@ -1,11 +1,50 @@
-@import 'tailwindcss';
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "admin-lte/dist/css/adminlte.min.css";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+body {
+    background: #f4f6f9;
 }
+
+.main-sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #343a40;
+    color: #fff;
+}
+
+.brand-link {
+    display: block;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar .nav-link {
+    color: #c2c7d0;
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+}
+
+.sidebar .nav-link:hover {
+    background: #495057;
+    color: #fff;
+}
+
+.main-header {
+    margin-left: 250px;
+    height: 56px;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.content-wrapper {
+    margin-left: 250px;
+    padding: 20px;
+    min-height: calc(100vh - 56px);
+}
+

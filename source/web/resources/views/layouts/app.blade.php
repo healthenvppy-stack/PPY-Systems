@@ -43,25 +43,60 @@
 
         <div class="sidebar">
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
 
-                    <li class="nav-item">
+                    <div class="sidebar-zone zone-executive">
+                        <div class="zone-title text-primary">Executive</div>
                         <a href="/dashboard" class="nav-link">
-                            Dashboard
+                            📊 Executive Dashboard
                         </a>
-                    </li>
+                    </div>
 
-                    <li class="nav-item">
+                    <div class="sidebar-zone zone-population">
+                        <div class="zone-title text-success">Population</div>
+                        <a href="{{ route('population.dashboard') }}" class="nav-link">
+                            📈 Dashboard
+                        </a>
                         <a href="{{ route('citizens.index') }}" class="nav-link">
-                            Citizens
+                            👥 Citizens
                         </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a href="{{ route('households.index') }}" class="nav-link">
-                            Households
+                            🏠 Households
                         </a>
-                    </li>
+                    </div>
+
+                    <div class="sidebar-zone zone-service">
+                        <div class="zone-title" style="color:#b197fc;">Service Modules</div>
+                        <a href="#" class="nav-link">
+                            🤝 Welfare
+                        </a>
+                        <a href="#" class="nav-link">
+                            🏥 Public Health
+                        </a>
+                        <a href="#" class="nav-link">
+                            🗺️ GIS
+                        </a>
+                    </div>
+
+                    <div class="sidebar-zone zone-management">
+                        <div class="zone-title" style="color:#ffc078;">Management</div>
+                        <a href="#" class="nav-link">
+                            👤 HR
+                        </a>
+                        <a href="#" class="nav-link">
+                            🏢 Assets
+                        </a>
+                        <a href="#" class="nav-link">
+                            💰 Finance
+                        </a>
+                    </div>
+
+                    <div class="sidebar-zone zone-system">
+                        <div class="zone-title text-secondary">System</div>
+                        <a href="#" class="nav-link">
+                            ⚙️ Settings
+                        </a>
+                    </div>
 
                 </ul>
             </nav>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\HouseholdController;
+use App\Http\Controllers\PopulationDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,6 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('citizens', CitizenController::class);
 
     Route::resource('households', HouseholdController::class);
+
+    Route::get('/population/dashboard',
+    [PopulationDashboardController::class,'index'])
+    ->name('population.dashboard');
 
 });
 

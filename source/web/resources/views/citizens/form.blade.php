@@ -1,3 +1,17 @@
+<div class="col-md-6 mb-3">
+    <label>ครัวเรือน / บ้านเลขที่</label>
+    <select name="household_id" class="form-control">
+        <option value="">-- ยังไม่เชื่อมครัวเรือน --</option>
+
+        @foreach($households as $household)
+            <option value="{{ $household->id }}"
+                {{ old('household_id', $citizen->household_id ?? '') == $household->id ? 'selected' : '' }}>
+                {{ $household->house_code }} | บ้านเลขที่ {{ $household->house_no }} หมู่ {{ $household->moo }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 <div class="row">
 
     <div class="col-md-4 mb-3">

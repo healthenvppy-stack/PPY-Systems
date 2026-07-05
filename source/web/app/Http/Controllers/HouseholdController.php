@@ -58,6 +58,8 @@ class HouseholdController extends Controller
 
     public function show(Household $household)
     {
+        $household->load('citizens');
+
         return view('households.show', compact('household'));
     }
 

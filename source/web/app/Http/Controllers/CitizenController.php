@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Citizen;
+use App\Models\Household;
 
 class CitizenController extends Controller
 {
@@ -41,7 +42,9 @@ class CitizenController extends Controller
 
     public function create()
     {
-        return view('citizens.create');
+        $households = Household::orderBy('house_code')->get();
+
+        return view('citizens.create', compact('households'));
     }
 
     public function store()
@@ -52,6 +55,7 @@ class CitizenController extends Controller
             'last_name' => ['nullable', 'max:100'],
             'gender' => ['required'],
             'birth_date' => ['nullable', 'date'],
+            'household_id' => ['nullable', 'exists:households,id'],
         ]);
 
         Citizen::create(request()->only([
@@ -60,6 +64,7 @@ class CitizenController extends Controller
             'last_name',
             'gender',
             'birth_date',
+            'household_id',
         ]));
 
         return redirect()->route('citizens.index')
@@ -68,12 +73,20 @@ class CitizenController extends Controller
 
     public function show(Citizen $citizen)
     {
+        //$citizen->load('household');
+        $citizen->load([
+            'household',
+            'household.citizens'
+        ]);
+
         return view('citizens.show', compact('citizen'));
     }
 
     public function edit(Citizen $citizen)
     {
-        return view('citizens.edit', compact('citizen'));
+        $households = Household::orderBy('house_code')->get();
+
+        return view('citizens.edit', compact('citizen', 'households'));
     }
 
     public function update(Citizen $citizen)
@@ -84,6 +97,7 @@ class CitizenController extends Controller
             'last_name' => 'nullable|max:100',
             'gender' => 'required',
             'birth_date' => 'nullable|date',
+            'household_id' => ['nullable', 'exists:households,id'],
         ]);
 
         $citizen->update(request()->only([
@@ -92,6 +106,7 @@ class CitizenController extends Controller
             'last_name',
             'gender',
             'birth_date',
+            'household_id',
         ]));
 
         return redirect()

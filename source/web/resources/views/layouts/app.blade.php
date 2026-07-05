@@ -52,8 +52,14 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/citizens" class="nav-link">
-                            Population
+                        <a href="{{ route('citizens.index') }}" class="nav-link">
+                            Citizens
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('households.index') }}" class="nav-link">
+                            Households
                         </a>
                     </li>
 

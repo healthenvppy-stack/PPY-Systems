@@ -46,58 +46,60 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
 
                     <div class="sidebar-zone zone-executive">
-                        <div class="zone-title text-primary">Executive</div>
+                        <div class="zone-title text-primary">ภาพรวม / Executive</div>
                         <a href="/dashboard" class="nav-link">
-                            📊 Executive Dashboard
+                            📊 ภาพรวมผู้บริหาร / Executive Dashboard
                         </a>
                     </div>
 
                     <div class="sidebar-zone zone-population">
-                        <div class="zone-title text-success">Population</div>
+                        <div class="zone-title text-success">ประชากร / Population</div>
+                        <a href="{{ route('modules.population') }}" class="nav-link">
+                            🏠 หน้าแรก / Home
+                        </a>
                         <a href="{{ route('population.dashboard') }}" class="nav-link">
-                            📈 Dashboard
+                            📈 แดชบอร์ด / Dashboard
                         </a>
                         <a href="{{ route('citizens.index') }}" class="nav-link">
-                            👥 Citizens
+                            👥 ข้อมูลประชาชน / Citizens
                         </a>
                         <a href="{{ route('households.index') }}" class="nav-link">
-                            🏠 Households
+                            🏠 ข้อมูลครัวเรือน / Households
                         </a>
                     </div>
 
                     <div class="sidebar-zone zone-service">
-                        <div class="zone-title" style="color:#b197fc;">Service Modules</div>
+                        <div class="zone-title" style="color:#b197fc;">บริการประชาชน / Services</div>
                         <a href="#" class="nav-link">
-                            🤝 Welfare
+                            🤝 สวัสดิการ / Welfare
                         </a>
                         <a href="#" class="nav-link">
-                            🏥 Public Health
+                            🏥 สาธารณสุข / Public Health
                         </a>
                         <a href="#" class="nav-link">
-                            🗺️ GIS
+                            🗺️ แผนที่ / GIS
                         </a>
                     </div>
 
                     <div class="sidebar-zone zone-management">
-                        <div class="zone-title" style="color:#ffc078;">Management</div>
+                        <div class="zone-title" style="color:#ffc078;">บริหารจัดการ / Management</div>
                         <a href="#" class="nav-link">
-                            👤 HR
+                            👤 บุคลากร / HR
                         </a>
                         <a href="#" class="nav-link">
-                            🏢 Assets
+                            🏢 ทรัพย์สิน / Assets
                         </a>
                         <a href="#" class="nav-link">
-                            💰 Finance
+                            💰 การเงิน / Finance
                         </a>
                     </div>
 
                     <div class="sidebar-zone zone-system">
-                        <div class="zone-title text-secondary">System</div>
+                        <div class="zone-title text-secondary">ระบบ / System</div>
                         <a href="#" class="nav-link">
-                            ⚙️ Settings
+                            ⚙️ ตั้งค่าระบบ / Settings
                         </a>
                     </div>
-
                 </ul>
             </nav>
         </div>

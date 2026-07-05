@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\PopulationDashboardController;
+use App\Http\Controllers\ModuleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +28,10 @@ Route::middleware('auth')->group(function () {
     [PopulationDashboardController::class,'index'])
     ->name('population.dashboard');
 
+    Route::get('/modules/population', [ModuleController::class, 'population'])
+    ->name('modules.population');
+
+    
 });
 
 require __DIR__.'/auth.php';

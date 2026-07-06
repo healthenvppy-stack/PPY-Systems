@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Citizen extends Model
 {
@@ -31,5 +33,15 @@ class Citizen extends Model
     public function household(): BelongsTo
     {
         return $this->belongsTo(Household::class);
+    }
+
+    public function welfareProfile(): HasOne
+    {
+        return $this->hasOne(WelfareProfile::class);
+    }
+
+    public function serviceCases(): HasMany
+    {
+        return $this->hasMany(ServiceCase::class);
     }
 }

@@ -70,6 +70,10 @@
 
                     <div class="sidebar-zone zone-service">
                         <div class="zone-title" style="color:#b197fc;">บริการประชาชน / Services</div>
+                        <a href="{{ route('service-cases.index') }}" class="nav-link">
+                            📋 เคสบริการ / Service Cases
+                        </a>
+                        
                         <a href="#" class="nav-link">
                             🤝 สวัสดิการ / Welfare
                         </a>

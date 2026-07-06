@@ -6,6 +6,7 @@ use App\Http\Controllers\CitizenController;
 use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\PopulationDashboardController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\ServiceCaseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/modules/population', [ModuleController::class, 'population'])
     ->name('modules.population');
+
+    Route::resource('service-cases', ServiceCaseController::class);
 
     
 });

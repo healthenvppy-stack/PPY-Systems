@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ServiceCase;
+use App\Models\Citizen;
+use App\Http\Requests\StoreServiceCaseRequest;
+use App\Models\ServiceCaseTimeline;
+
+
+class ServiceCaseController extends Controller
+{
+    public function index()
+    {
+        $cases = ServiceCase::with('citizen')
+            ->orderBy('id', 'desc')
+            ->paginate(20);
+
+        return view('service_cases.index', compact('cases'));
+    }
+
+    public function create()
+    {
+        $citizens = Citizen::orderBy('first_name')
+            ->get();
+
+        return view(
+            'service_cases.create',
+            compact('citizens')
+        );
+    }
+
+    public function store(StoreServiceCaseRequest $request)
+    {
+        $case = ServiceCase::create([
+            'citizen_id' => $request->citizen_id,
+            'module' => $request->module,
+            'case_type' => $request->case_type,
+            'status' => 'open',
+            'priority' => $request->priority,
+            'opened_at' => $request->opened_at,
+            'created_by' => auth()->id(),
+            'remark' => $request->remark,
+        ]);
+
+        ServiceCaseTimeline::create([
+            'service_case_id' => $case->id,
+            'action' => 'open_case',
+            'description' => 'เปิดเคสใหม่',
+            'user_id' => auth()->id(),
+            'action_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('service-cases.index')
+            ->with('success', 'เปิดเคสใหม่เรียบร้อยแล้ว');
+    }
+
+    public function show(ServiceCase $serviceCase)
+    {
+        $serviceCase->load([
+            'citizen',
+            'timelines.user',
+            'assignedUser',
+            'creator',
+        ]);
+
+        return view('service_cases.show', compact('serviceCase'));
+    }
+}

@@ -76,7 +76,8 @@ class CitizenController extends Controller
         //$citizen->load('household');
         $citizen->load([
             'household',
-            'household.citizens'
+            'household.citizens',
+            'serviceCases.timelines'
         ]);
 
         return view('citizens.show', compact('citizen'));

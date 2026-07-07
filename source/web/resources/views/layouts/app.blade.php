@@ -74,8 +74,8 @@
                             📋 เคสบริการ / Service Cases
                         </a>
                         
-                        <a href="#" class="nav-link">
-                            🤝 สวัสดิการ / Welfare
+                        <a href="{{ route('social-welfare.dashboard') }}" class="nav-link">
+                            🤝 สวัสดิการ / Social Welfare
                         </a>
                         <a href="#" class="nav-link">
                             🏥 สาธารณสุข / Public Health

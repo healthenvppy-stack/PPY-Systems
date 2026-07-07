@@ -7,6 +7,7 @@ use App\Http\Controllers\HouseholdController;
 use App\Http\Controllers\PopulationDashboardController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ServiceCaseController;
+use App\Http\Controllers\SocialWelfareController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('service-cases', ServiceCaseController::class);
 
+    Route::get('/social-welfare/dashboard', [SocialWelfareController::class, 'dashboard'])
+    ->name('social-welfare.dashboard');
     
 });
 

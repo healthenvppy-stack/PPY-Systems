@@ -168,15 +168,56 @@
 
     <div class="card">
         <div class="card-header">
-            <strong>Timeline</strong>
+            <strong>Service Cases / เคสบริการ</strong>
         </div>
 
         <div class="card-body">
-            <ul class="mb-0">
-                <li>สร้างข้อมูลเมื่อ {{ optional($citizen->created_at)->format('d/m/Y H:i') }}</li>
-                <li>แก้ไขล่าสุด {{ optional($citizen->updated_at)->format('d/m/Y H:i') }}</li>
-                <li class="text-muted">รอเชื่อมประวัติ Welfare / Public Health / GIS</li>
-            </ul>
+
+            @forelse($citizen->serviceCases as $case)
+
+                <div class="border-start border-3 border-primary ps-3 mb-3">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>{{ $case->case_no }}</strong>
+                            <span class="badge bg-secondary">{{ $case->module }}</span>
+                            <span class="badge bg-info">{{ $case->status }}</span>
+                            <span class="badge bg-warning text-dark">{{ $case->priority }}</span>
+                        </div>
+
+                        <a href="{{ route('service-cases.show', $case) }}" class="btn btn-sm btn-info">
+                            ดูเคส
+                        </a>
+                    </div>
+
+                    <div class="mt-2">
+                        <strong>ประเภทเคส:</strong> {{ $case->case_type }}
+                    </div>
+
+                    <div class="text-muted">
+                        เปิดเคสเมื่อ:
+                        {{ optional($case->opened_at)->format('d/m/Y') ?? '-' }}
+                    </div>
+
+                    @if($case->timelines->count())
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                Timeline ล่าสุด:
+                                {{ $case->timelines->last()->description }}
+                            </small>
+                        </div>
+                    @endif
+
+                </div>
+
+            @empty
+
+                <div class="text-muted">
+                    ยังไม่มีเคสบริการของประชาชนรายนี้
+                </div>
+
+            @endforelse
+
         </div>
     </div>
 

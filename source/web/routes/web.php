@@ -48,6 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/citizens/{citizen}/service-cases/create',
     [ServiceCaseController::class, 'createForCitizen'])
     ->name('citizens.service-cases.create');
+
+    Route::patch('/service-cases/{serviceCase}/status',
+    [ServiceCaseController::class, 'updateStatus'])
+    ->name('service-cases.update-status');
 });
 
 require __DIR__.'/auth.php';

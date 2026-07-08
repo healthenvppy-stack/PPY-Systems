@@ -86,6 +86,29 @@
                             </tr>
 
                         </table>
+                        <hr>
+
+                        <form method="POST" action="{{ route('service-cases.update-status', $serviceCase) }}">
+                            @csrf
+                            @method('PATCH')
+
+                            <div class="mb-3">
+                                <label>เปลี่ยนสถานะเคส</label>
+                                <select name="status" class="form-control">
+                                    <option value="open" {{ $serviceCase->status == 'open' ? 'selected' : '' }}>เปิดเคส</option>
+                                    <option value="assessing" {{ $serviceCase->status == 'assessing' ? 'selected' : '' }}>ประเมิน</option>
+                                    <option value="approved" {{ $serviceCase->status == 'approved' ? 'selected' : '' }}>อนุมัติ</option>
+                                    <option value="processing" {{ $serviceCase->status == 'processing' ? 'selected' : '' }}>ดำเนินการ</option>
+                                    <option value="follow_up" {{ $serviceCase->status == 'follow_up' ? 'selected' : '' }}>ติดตามผล</option>
+                                    <option value="closed" {{ $serviceCase->status == 'closed' ? 'selected' : '' }}>ปิดเคส</option>
+                                    <option value="cancelled" {{ $serviceCase->status == 'cancelled' ? 'selected' : '' }}>ยกเลิก</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                อัปเดตสถานะ
+                            </button>
+                        </form>
 
                     </div>
 

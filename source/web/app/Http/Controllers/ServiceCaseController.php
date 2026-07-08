@@ -72,4 +72,30 @@ class ServiceCaseController extends Controller
     {
         return view('service_cases.create_for_citizen', compact('citizen'));
     }
+
+    public function updateStatus(ServiceCase $serviceCase)
+    {
+        request()->validate([
+            'status' => ['required', 'in:open,assessing,approved,processing,follow_up,closed,cancelled'],
+        ]);
+
+        $oldStatus = $serviceCase->status;
+
+        $serviceCase->update([
+            'status' => request('status'),
+            'closed_at' => request('status') === 'closed' ? now() : null,
+        ]);
+
+        ServiceCaseTimeline::create([
+            'service_case_id' => $serviceCase->id,
+            'action' => 'status_changed',
+            'description' => 'เปลี่ยนสถานะจาก ' . $oldStatus . ' เป็น ' . request('status'),
+            'user_id' => auth()->id(),
+            'action_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('service-cases.show', $serviceCase)
+            ->with('success', 'อัปเดตสถานะเคสเรียบร้อยแล้ว');
+    }
 }

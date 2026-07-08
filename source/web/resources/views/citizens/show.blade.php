@@ -104,6 +104,13 @@
                     class="btn btn-sm btn-success mt-3">
                         แก้ไขข้อมูลสวัสดิการ
                     </a>
+
+                    <a href="{{ route('citizens.service-cases.create', $citizen) }}"
+                    class="btn btn-sm btn-primary mt-2">
+
+                        + เปิดเคสสวัสดิการ
+
+                    </a>
                 </div>
             </div>
         </div>

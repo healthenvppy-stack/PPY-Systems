@@ -67,4 +67,9 @@ class ServiceCaseController extends Controller
 
         return view('service_cases.show', compact('serviceCase'));
     }
+
+    public function createForCitizen(Citizen $citizen)
+    {
+        return view('service_cases.create_for_citizen', compact('citizen'));
+    }
 }

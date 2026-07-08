@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/citizens/{citizen}/welfare-profile', [WelfareProfileController::class, 'update'])
         ->name('citizens.welfare-profile.update');
+
+    Route::get('/citizens/{citizen}/service-cases/create',
+    [ServiceCaseController::class, 'createForCitizen'])
+    ->name('citizens.service-cases.create');
 });
 
 require __DIR__.'/auth.php';

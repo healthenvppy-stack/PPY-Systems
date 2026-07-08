@@ -8,6 +8,7 @@ use App\Http\Controllers\PopulationDashboardController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ServiceCaseController;
 use App\Http\Controllers\SocialWelfareController;
+use App\Http\Controllers\WelfareProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/social-welfare/dashboard', [SocialWelfareController::class, 'dashboard'])
     ->name('social-welfare.dashboard');
     
+    Route::get('/citizens/{citizen}/welfare-profile/edit', [WelfareProfileController::class, 'edit'])
+    ->name('citizens.welfare-profile.edit');
+
+    Route::put('/citizens/{citizen}/welfare-profile', [WelfareProfileController::class, 'update'])
+        ->name('citizens.welfare-profile.update');
 });
 
 require __DIR__.'/auth.php';

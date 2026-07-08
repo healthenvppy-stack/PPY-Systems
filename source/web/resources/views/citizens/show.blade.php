@@ -64,9 +64,46 @@
         <div class="col-md-3 mb-3">
             <div class="card h-100">
                 <div class="card-body">
-                    <h6 class="text-muted">Welfare</h6>
-                    <h5>รอเชื่อมข้อมูล</h5>
-                    <p class="mb-0 text-muted">สวัสดิการ / กลุ่มเปราะบาง</p>
+                    <h6 class="text-muted">Social Welfare</h6>
+
+                    @if($citizen->welfareProfile)
+                        <div class="mb-2">
+                            @if($citizen->welfareProfile->is_elderly)
+                                <span class="badge bg-primary">ผู้สูงอายุ</span>
+                            @endif
+
+                            @if($citizen->welfareProfile->is_disabled)
+                                <span class="badge bg-warning text-dark">ผู้พิการ</span>
+                            @endif
+
+                            @if($citizen->welfareProfile->is_low_income)
+                                <span class="badge bg-success">รายได้น้อย</span>
+                            @endif
+
+                            @if($citizen->welfareProfile->is_vulnerable)
+                                <span class="badge bg-secondary">กลุ่มเปราะบาง</span>
+                            @endif
+
+                            @if($citizen->welfareProfile->is_homebound)
+                                <span class="badge bg-info">ติดบ้าน</span>
+                            @endif
+
+                            @if($citizen->welfareProfile->is_bedridden)
+                                <span class="badge bg-danger">ติดเตียง</span>
+                            @endif
+                        </div>
+
+                        <p class="mb-1">Care: {{ $citizen->welfareProfile->care_level }}</p>
+                        <p class="mb-1">Risk: {{ $citizen->welfareProfile->risk_level }}</p>
+                        <p class="mb-0">Priority: {{ $citizen->welfareProfile->priority_level }}</p>
+                    @else
+                        <p class="text-muted mb-0">ยังไม่มีข้อมูลสวัสดิการ</p>
+                    @endif
+
+                    <a href="{{ route('citizens.welfare-profile.edit', $citizen) }}"
+                    class="btn btn-sm btn-success mt-3">
+                        แก้ไขข้อมูลสวัสดิการ
+                    </a>
                 </div>
             </div>
         </div>
@@ -167,6 +204,17 @@
     </div>
 
     <div class="card">
+
+        <div class="mb-3">
+
+            <a href="{{ route('citizens.welfare-profile.edit',$citizen) }}"
+            class="btn btn-success">
+
+                🤝 แก้ไขข้อมูลสวัสดิการ
+
+            </a>
+
+        </div>
         <div class="card-header">
             <strong>Service Cases / เคสบริการ</strong>
         </div>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class Citizen extends Model
 {
     protected $fillable = [
@@ -44,4 +45,6 @@ class Citizen extends Model
     {
         return $this->hasMany(ServiceCase::class);
     }
+
+    
 }

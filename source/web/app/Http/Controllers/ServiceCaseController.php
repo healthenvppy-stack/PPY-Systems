@@ -98,4 +98,25 @@ class ServiceCaseController extends Controller
             ->route('service-cases.show', $serviceCase)
             ->with('success', 'อัปเดตสถานะเคสเรียบร้อยแล้ว');
     }
+
+    public function storeTimeline(ServiceCase $serviceCase)
+    {
+        request()->validate([
+            'action' => ['required', 'max:100'],
+            'description' => ['nullable'],
+            'action_at' => ['nullable', 'date'],
+        ]);
+
+        ServiceCaseTimeline::create([
+            'service_case_id' => $serviceCase->id,
+            'action' => request('action'),
+            'description' => request('description'),
+            'user_id' => auth()->id(),
+            'action_at' => request('action_at') ?? now(),
+        ]);
+
+        return redirect()
+            ->route('service-cases.show', $serviceCase)
+            ->with('success', 'บันทึกกิจกรรมเรียบร้อยแล้ว');
+    }
 }

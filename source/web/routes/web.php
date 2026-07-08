@@ -52,6 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/service-cases/{serviceCase}/status',
     [ServiceCaseController::class, 'updateStatus'])
     ->name('service-cases.update-status');
+
+    Route::post('/service-cases/{serviceCase}/timeline',
+    [ServiceCaseController::class,'storeTimeline'])
+    ->name('service-cases.timeline.store');
 });
 
 require __DIR__.'/auth.php';

@@ -127,6 +127,51 @@
                 </div>
 
                 <div class="card-body">
+                    <form method="POST"
+                        action="{{ route('service-cases.timeline.store', $serviceCase) }}"
+                        class="mb-4">
+
+                        @csrf
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-2">
+                                <label>กิจกรรม</label>
+                                <select name="action" class="form-control">
+                                    <option value="field_visit">ลงพื้นที่</option>
+                                    <option value="home_visit">เยี่ยมบ้าน</option>
+                                    <option value="phone_followup">โทรติดตาม</option>
+                                    <option value="assistance_given">มอบความช่วยเหลือ</option>
+                                    <option value="referred">ส่งต่อหน่วยงาน</option>
+                                    <option value="follow_up">นัดติดตามผล</option>
+                                    <option value="note">บันทึกทั่วไป</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-2">
+                                <label>วันที่กิจกรรม</label>
+                                <input type="datetime-local"
+                                    name="action_at"
+                                    class="form-control"
+                                    value="{{ now()->format('Y-m-d\TH:i') }}">
+                            </div>
+
+                            <div class="col-md-12 mb-2">
+                                <label>รายละเอียด</label>
+                                <textarea name="description"
+                                        rows="3"
+                                        class="form-control"></textarea>
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-primary btn-sm">
+                            + บันทึกกิจกรรม
+                        </button>
+
+                    </form>
+
+                    <hr>
 
                     @forelse($serviceCase->timelines as $timeline)
 

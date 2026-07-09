@@ -77,7 +77,7 @@
                         <a href="{{ route('social-welfare.dashboard') }}" class="nav-link">
                             🤝 สวัสดิการ / Social Welfare
                         </a>
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('public-health.dashboard') }}" class="nav-link">
                             🏥 สาธารณสุข / Public Health
                         </a>
                         <a href="#" class="nav-link">

@@ -119,4 +119,9 @@ class ServiceCaseController extends Controller
             ->route('service-cases.show', $serviceCase)
             ->with('success', 'บันทึกกิจกรรมเรียบร้อยแล้ว');
     }
+
+    public function createHealthForCitizen(Citizen $citizen)
+    {
+        return view('service_cases.create_health_for_citizen', compact('citizen'));
+    }
 }

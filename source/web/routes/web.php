@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceCaseController;
 use App\Http\Controllers\SocialWelfareController;
 use App\Http\Controllers\WelfareProfileController;
 use App\Http\Controllers\HealthProfileController;
+use App\Http\Controllers\PublicHealthController;
 
 
 Route::get('/', function () {
@@ -66,6 +67,14 @@ Route::middleware('auth')->group(function () {
     Route::put('/citizens/{citizen}/health-profile',
     [HealthProfileController::class, 'update'])
     ->name('citizens.health-profile.update');
+
+    Route::get('/public-health/dashboard',
+    [PublicHealthController::class, 'dashboard'])
+    ->name('public-health.dashboard');
+
+    Route::get('/citizens/{citizen}/health-cases/create',
+    [ServiceCaseController::class, 'createHealthForCitizen'])
+    ->name('citizens.health-cases.create');
 });
 
 require __DIR__.'/auth.php';

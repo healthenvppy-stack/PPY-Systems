@@ -166,6 +166,10 @@
                     class="btn btn-sm btn-success mt-3">
                         แก้ไขข้อมูลสุขภาพ
                     </a>
+                    <a href="{{ route('citizens.health-cases.create', $citizen) }}"
+                    class="btn btn-sm btn-primary mt-2">
+                        + เปิดเคสสุขภาพ
+                    </a>
                 </div>
             </div>
         </div>

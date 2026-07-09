@@ -79,6 +79,7 @@ class CitizenController extends Controller
             'household.citizens',
             'serviceCases.timelines',
             'welfareProfile',
+            'healthProfile',
         ]);
 
         return view('citizens.show', compact('citizen'));

@@ -46,5 +46,8 @@ class Citizen extends Model
         return $this->hasMany(ServiceCase::class);
     }
 
-    
+    public function healthProfile(): HasOne
+    {
+        return $this->hasOne(HealthProfile::class);
+    }
 }

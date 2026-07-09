@@ -119,8 +119,53 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h6 class="text-muted">Public Health</h6>
-                    <h5>รอเชื่อมข้อมูล</h5>
-                    <p class="mb-0 text-muted">สุขภาพ / โรคเรื้อรัง / เยี่ยมบ้าน</p>
+
+                    @if($citizen->healthProfile)
+
+                        <div class="mb-2">
+                            @if($citizen->healthProfile->has_chronic_disease)
+                                <span class="badge bg-secondary">โรคเรื้อรัง</span>
+                            @endif
+
+                            @if($citizen->healthProfile->has_diabetes)
+                                <span class="badge bg-primary">เบาหวาน</span>
+                            @endif
+
+                            @if($citizen->healthProfile->has_hypertension)
+                                <span class="badge bg-warning text-dark">ความดัน</span>
+                            @endif
+
+                            @if($citizen->healthProfile->has_heart_disease)
+                                <span class="badge bg-danger">โรคหัวใจ</span>
+                            @endif
+
+                            @if($citizen->healthProfile->has_kidney_disease)
+                                <span class="badge bg-dark">โรคไต</span>
+                            @endif
+
+                            @if($citizen->healthProfile->is_homebound)
+                                <span class="badge bg-info">ติดบ้าน</span>
+                            @endif
+
+                            @if($citizen->healthProfile->is_bedridden)
+                                <span class="badge bg-danger">ติดเตียง</span>
+                            @endif
+                        </div>
+
+                        <p class="mb-1">Health Level: {{ $citizen->healthProfile->health_level }}</p>
+                        <p class="mb-0">
+                            Last Visit:
+                            {{ optional($citizen->healthProfile->last_home_visit_at)->format('d/m/Y') ?? '-' }}
+                        </p>
+
+                    @else
+                        <p class="text-muted mb-0">ยังไม่มีข้อมูลสุขภาพ</p>
+                    @endif
+
+                    <a href="{{ route('citizens.health-profile.edit', $citizen) }}"
+                    class="btn btn-sm btn-success mt-3">
+                        แก้ไขข้อมูลสุขภาพ
+                    </a>
                 </div>
             </div>
         </div>

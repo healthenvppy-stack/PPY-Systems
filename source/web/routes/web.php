@@ -9,6 +9,8 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ServiceCaseController;
 use App\Http\Controllers\SocialWelfareController;
 use App\Http\Controllers\WelfareProfileController;
+use App\Http\Controllers\HealthProfileController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,6 +58,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/service-cases/{serviceCase}/timeline',
     [ServiceCaseController::class,'storeTimeline'])
     ->name('service-cases.timeline.store');
+
+    Route::get('/citizens/{citizen}/health-profile/edit',
+    [HealthProfileController::class, 'edit'])
+    ->name('citizens.health-profile.edit');
+
+    Route::put('/citizens/{citizen}/health-profile',
+    [HealthProfileController::class, 'update'])
+    ->name('citizens.health-profile.update');
 });
 
 require __DIR__.'/auth.php';

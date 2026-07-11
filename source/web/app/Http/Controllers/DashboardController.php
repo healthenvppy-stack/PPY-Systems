@@ -7,6 +7,8 @@ use App\Models\HealthProfile;
 use App\Models\Household;
 use App\Models\ServiceCase;
 use App\Models\WelfareProfile;
+use App\Models\BenefitType;
+use App\Models\WelfareBenefit;
 
 class DashboardController extends Controller
 {
@@ -34,6 +36,39 @@ class DashboardController extends Controller
 
         $closedCases = ServiceCase::where('status', 'closed')->count();
 
+        $elderlyAllowanceTypeId = BenefitType::where(
+            'code',
+            'ELDERLY_ALLOWANCE'
+        )->value('id');
+
+        $disabilityAllowanceTypeId = BenefitType::where(
+            'code',
+            'DISABILITY_ALLOWANCE'
+        )->value('id');
+
+        $elderlyAllowanceRecipients = WelfareBenefit::where(
+            'benefit_type_id',
+            $elderlyAllowanceTypeId
+        )
+            ->where('status', 'receiving')
+            ->distinct('citizen_id')
+            ->count('citizen_id');
+
+        $disabledAllowanceRecipients = WelfareBenefit::where(
+            'benefit_type_id',
+            $disabilityAllowanceTypeId
+        )
+            ->where('status', 'receiving')
+            ->distinct('citizen_id')
+            ->count('citizen_id');
+
+        $elderlyWithoutAllowance = max(
+            $elderly - $elderlyAllowanceRecipients,
+            0
+        );
+
+        $pendingBenefits = WelfareBenefit::where('status', 'pending')->count();
+
         return view('dashboard', compact(
             'totalCitizens',
             'totalHouseholds',
@@ -45,7 +80,11 @@ class DashboardController extends Controller
             'hypertension',
             'openCases',
             'processingCases',
-            'closedCases'
+            'closedCases',
+            'elderlyAllowanceRecipients',
+            'disabledAllowanceRecipients',
+            'elderlyWithoutAllowance',
+            'pendingBenefits',
         ));
     }
 }

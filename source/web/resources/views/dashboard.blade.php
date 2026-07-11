@@ -68,9 +68,40 @@
                     <strong>สวัสดิการสังคม / Social Welfare</strong>
                 </div>
                 <div class="card-body">
-                    <p class="mb-2">ผู้สูงอายุ: <strong>{{ number_format($elderly) }}</strong></p>
-                    <p class="mb-2">ผู้พิการ: <strong>{{ number_format($disabled) }}</strong></p>
-                    <p class="mb-0">ผู้ป่วยติดเตียง: <strong>{{ number_format($welfareBedridden) }}</strong></p>
+                    <p class="mb-2">
+                        ผู้สูงอายุทั้งหมด:
+                        <strong>{{ number_format($elderly) }}</strong>
+                    </p>
+
+                    <p class="mb-2">
+                        รับเบี้ยผู้สูงอายุ:
+                        <strong>{{ number_format($elderlyAllowanceRecipients) }}</strong>
+                    </p>
+
+                    <p class="mb-2">
+                        ผู้สูงอายุที่ยังไม่ได้รับเบี้ย:
+                        <strong>{{ number_format($elderlyWithoutAllowance) }}</strong>
+                    </p>
+
+                    <p class="mb-2">
+                        ผู้พิการ:
+                        <strong>{{ number_format($disabled) }}</strong>
+                    </p>
+
+                    <p class="mb-2">
+                        รับเบี้ยความพิการ:
+                        <strong>{{ number_format($disabledAllowanceRecipients) }}</strong>
+                    </p>
+
+                    <p class="mb-0">
+                        สิทธิ์ที่รอตรวจสอบ:
+                        <strong>{{ number_format($pendingBenefits) }}</strong>
+                    </p>
+
+                    <a href="{{ route('social-welfare.dashboard') }}"
+                    class="btn btn-sm btn-warning mt-3">
+                        เปิดข้อมูลสวัสดิการ
+                    </a>
                 </div>
             </div>
         </div>

@@ -261,7 +261,7 @@
 
     <div class="card">
 
-        <div class="mb-3">
+        <!--<div class="mb-3">
 
             <a href="{{ route('citizens.welfare-profile.edit',$citizen) }}"
             class="btn btn-success">
@@ -270,7 +270,80 @@
 
             </a>
 
+        </div>-->
+
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <strong>สิทธิประโยชน์ / Benefits</strong>
+
+                <a href="{{ route('citizens.benefits.create', $citizen) }}"
+                class="btn btn-sm btn-primary">
+                    + เพิ่มสิทธิประโยชน์
+                </a>
+            </div>
+
+            <div class="card-body">
+                @forelse($citizen->welfareBenefits as $benefit)
+                    <div class="border rounded p-3 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <strong>
+                                {{ $benefit->benefitType->name_th ?? '-' }}
+                            </strong>
+
+                            <span class="badge bg-info">
+                                {{ $benefit->status }}
+                            </span>
+                        </div>
+
+                        <div class="mt-2">
+                            จำนวนเงิน:
+                            {{ $benefit->amount !== null ? number_format($benefit->amount, 2) : '-' }}
+                            บาท
+                        </div>
+
+                        <div class="text-muted">
+                            เริ่ม:
+                            {{ optional($benefit->start_date)->format('d/m/Y') ?? '-' }}
+                            |
+                            สิ้นสุด:
+                            {{ optional($benefit->end_date)->format('d/m/Y') ?? '-' }}
+                        </div>
+
+                        @if($benefit->agency)
+                            <div class="text-muted">
+                                หน่วยงาน: {{ $benefit->agency }}
+                            </div>
+                        @endif
+
+                        <div class="mt-3 d-flex gap-2">
+
+                            <a href="{{ route('citizens.benefits.edit', [$citizen, $benefit]) }}"
+                            class="btn btn-sm btn-warning">
+                                แก้ไข
+                            </a>
+
+                            <form method="POST"
+                                action="{{ route('citizens.benefits.destroy', [$citizen, $benefit]) }}"
+                                onsubmit="return confirm('ยืนยันการลบสิทธิประโยชน์นี้หรือไม่?')">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    ลบ
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-muted">
+                        ยังไม่มีข้อมูลสิทธิประโยชน์
+                    </div>
+                @endforelse
+            </div>
         </div>
+
         <div class="card-header">
             <strong>Service Cases / เคสบริการ</strong>
         </div>

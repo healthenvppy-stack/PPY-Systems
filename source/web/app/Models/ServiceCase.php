@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class ServiceCase extends Model
 {
     protected $fillable = [
@@ -40,7 +41,7 @@ class ServiceCase extends Model
 
         });
     }
-    
+
     public function citizen(): BelongsTo
     {
         return $this->belongsTo(Citizen::class);

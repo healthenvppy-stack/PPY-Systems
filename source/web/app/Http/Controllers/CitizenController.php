@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Citizen;
 use App\Models\Household;
 
+
 class CitizenController extends Controller
 {
     public function index()
@@ -80,6 +81,7 @@ class CitizenController extends Controller
             'serviceCases.timelines',
             'welfareProfile',
             'healthProfile',
+            'welfareBenefits.benefitType',
         ]);
 
         return view('citizens.show', compact('citizen'));

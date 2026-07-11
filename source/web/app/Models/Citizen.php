@@ -50,4 +50,9 @@ class Citizen extends Model
     {
         return $this->hasOne(HealthProfile::class);
     }
+
+    public function welfareBenefits(): HasMany
+    {
+        return $this->hasMany(WelfareBenefit::class);
+    }
 }

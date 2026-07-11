@@ -12,6 +12,7 @@ use App\Http\Controllers\WelfareProfileController;
 use App\Http\Controllers\HealthProfileController;
 use App\Http\Controllers\PublicHealthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WelfareBenefitController;
 
 
 Route::get('/', function () {
@@ -76,6 +77,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/citizens/{citizen}/health-cases/create',
     [ServiceCaseController::class, 'createHealthForCitizen'])
     ->name('citizens.health-cases.create');
+
+    Route::get('/citizens/{citizen}/benefits/create',
+    [WelfareBenefitController::class, 'create'])
+    ->name('citizens.benefits.create');
+
+    Route::post('/citizens/{citizen}/benefits',
+        [WelfareBenefitController::class, 'store'])
+        ->name('citizens.benefits.store');
+
+    Route::get('/citizens/{citizen}/benefits/{welfareBenefit}/edit',
+    [WelfareBenefitController::class, 'edit']
+        )->name('citizens.benefits.edit');
+
+    Route::put('/citizens/{citizen}/benefits/{welfareBenefit}',
+    [WelfareBenefitController::class, 'update']
+        )->name('citizens.benefits.update');
+
+    Route::delete('/citizens/{citizen}/benefits/{welfareBenefit}',
+    [WelfareBenefitController::class, 'destroy']
+        )->name('citizens.benefits.destroy');
 });
 
 require __DIR__.'/auth.php';

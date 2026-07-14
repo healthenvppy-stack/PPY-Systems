@@ -28,6 +28,39 @@
                     |
                     วันเกิด: {{ optional($citizen->birth_date)->format('d/m/Y') ?? '-' }}
                 </div>
+
+                @php
+                    $citizenAge = $citizen->birth_date
+                        ? $citizen->birth_date->age
+                        : null;
+                @endphp
+
+                <div class="mt-3">
+                    <div class="d-inline-flex align-items-center gap-3 border rounded-3 px-3 py-2 bg-light">
+
+                        <div class="fs-2">
+                            🎂
+                        </div>
+
+                        <div>
+                            <small class="text-muted d-block">
+                                อายุปัจจุบัน / Current Age
+                            </small>
+
+                            @if($citizenAge !== null)
+                                <strong class="fs-4">
+                                    {{ number_format($citizenAge) }} ปี
+                                </strong>
+                            @else
+                                <strong class="text-muted">
+                                    ไม่พบข้อมูลวันเกิด
+                                </strong>
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
             <div class="text-end">

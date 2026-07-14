@@ -9,6 +9,8 @@ use App\Models\ServiceCase;
 use App\Models\WelfareProfile;
 use App\Models\BenefitType;
 use App\Models\WelfareBenefit;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -69,7 +71,70 @@ class DashboardController extends Controller
 
         $pendingBenefits = WelfareBenefit::where('status', 'pending')->count();
 
-        return view('dashboard', compact(
+        $totalCitizens = Citizen::count();
+
+        $totalMale = Citizen::where('gender', 'ชาย')->count();
+
+        $totalFemale = Citizen::where('gender', 'หญิง')->count();
+
+        $totalHouseholds = Household::count();
+
+        $populationByVillage = Citizen::query()
+            ->join('households', 'citizens.household_id', '=', 'households.id')
+            ->select(
+                'households.moo',
+                DB::raw('COUNT(DISTINCT households.id) as household_count'),
+                DB::raw('COUNT(citizens.id) as population_count'),
+                DB::raw("SUM(CASE WHEN citizens.gender = 'ชาย' THEN 1 ELSE 0 END) as male_count"),
+                DB::raw("SUM(CASE WHEN citizens.gender = 'หญิง' THEN 1 ELSE 0 END) as female_count")
+            )
+            ->whereNotNull('households.moo')
+            ->groupBy('households.moo')
+            ->orderBy('households.moo')
+            ->get();
+        
+        $today = now()->toDateString();
+
+        $ageGroups = [
+            'age_0_2' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 0 AND 2', [$today])
+                ->count(),
+
+            'age_3_5' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 3 AND 5', [$today])
+                ->count(),
+
+            'age_6_12' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 6 AND 12', [$today])
+                ->count(),
+
+            'age_13_18' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 13 AND 18', [$today])
+                ->count(),
+
+            'age_19_35' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 19 AND 35', [$today])
+                ->count(),
+
+            'age_36_59' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) BETWEEN 36 AND 59', [$today])
+                ->count(),
+
+            'age_60_plus' => Citizen::whereNotNull('birth_date')
+                ->whereRaw('TIMESTAMPDIFF(YEAR, birth_date, ?) >= 60', [$today])
+                ->count(),
+        ];
+
+        $oldestCitizen = Citizen::with('household')
+            ->whereNotNull('birth_date')
+            ->orderBy('birth_date')
+            ->first();
+
+        $oldestCitizenAge = $oldestCitizen?->birth_date
+            ? $oldestCitizen->birth_date->age
+            : null;
+
+            return view('dashboard', compact(
             'totalCitizens',
             'totalHouseholds',
             'elderly',
@@ -85,6 +150,12 @@ class DashboardController extends Controller
             'disabledAllowanceRecipients',
             'elderlyWithoutAllowance',
             'pendingBenefits',
+            'totalMale',
+            'totalFemale',
+            'populationByVillage',
+            'ageGroups',
+            'oldestCitizen',
+            'oldestCitizenAge'
         ));
     }
 }

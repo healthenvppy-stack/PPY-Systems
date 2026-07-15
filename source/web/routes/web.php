@@ -13,6 +13,7 @@ use App\Http\Controllers\HealthProfileController;
 use App\Http\Controllers\PublicHealthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelfareBenefitController;
+use App\Http\Controllers\DataQualityController;
 
 
 Route::get('/', function () {
@@ -97,6 +98,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/citizens/{citizen}/benefits/{welfareBenefit}',
     [WelfareBenefitController::class, 'destroy']
         )->name('citizens.benefits.destroy');
+
+    Route::get('/data-quality', [DataQualityController::class, 'index'])
+    ->name('data-quality.index');
+
+    
 });
 
 require __DIR__.'/auth.php';

@@ -66,6 +66,9 @@
                         <a href="{{ route('households.index') }}" class="nav-link">
                             🏠 ข้อมูลครัวเรือน / Households
                         </a>
+                        <a href="{{ route('data-quality.index') }}" class="nav-link">
+                            🧹 คุณภาพข้อมูล / Data Quality
+                        </a>
                     </div>
 
                     <div class="sidebar-zone zone-service">

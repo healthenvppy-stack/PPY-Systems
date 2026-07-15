@@ -64,4 +64,54 @@ class DataQualityController extends Controller
             'genderSummary'
         ));
     }
+
+    public function duplicateCitizens()
+    {
+        $duplicateCids = DB::connection('import_mysql')
+            ->table('datapop')
+            ->select('idcard')
+            ->whereRaw(
+                "CHAR_LENGTH(REPLACE(REPLACE(TRIM(idcard), '-', ''), ' ', '')) = 13"
+            )
+            ->groupBy('idcard')
+            ->havingRaw('COUNT(*) > 1')
+            ->pluck('idcard');
+
+        $records = DB::connection('import_mysql')
+            ->table('datapop')
+            ->whereIn('idcard', $duplicateCids)
+            ->orderBy('idcard')
+            ->orderBy('id')
+            ->get();
+
+        return view('data_quality.duplicates', compact('records'));
+    }
+
+    public function invalidCitizens()
+    {
+        $records = DB::connection('import_mysql')
+            ->table('datapop')
+            ->whereRaw(
+                "CHAR_LENGTH(REPLACE(REPLACE(TRIM(idcard), '-', ''), ' ', '')) <> 13"
+            )
+            ->orderBy('id')
+            ->get();
+
+        return view('data_quality.invalid_cids', compact('records'));
+    }
+
+    public function incompleteCitizens()
+    {
+        $citizens = Citizen::with('household')
+            ->where(function ($query) {
+                $query->whereNull('household_id')
+                    ->orWhereNull('birth_date')
+                    ->orWhereNull('phone')
+                    ->orWhere('phone', '');
+            })
+            ->orderBy('first_name')
+            ->paginate(30);
+
+        return view('data_quality.incomplete', compact('citizens'));
+    }
 }

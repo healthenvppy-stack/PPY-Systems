@@ -102,7 +102,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-quality', [DataQualityController::class, 'index'])
     ->name('data-quality.index');
 
-    
+    Route::get('/data-quality/duplicates', [DataQualityController::class, 'duplicateCitizens'])
+    ->name('data-quality.duplicates');
+
+    Route::get('/data-quality/invalid-cids', [DataQualityController::class, 'invalidCitizens'])
+        ->name('data-quality.invalid-cids');
+
+    Route::get('/data-quality/incomplete', [DataQualityController::class, 'incompleteCitizens'])
+        ->name('data-quality.incomplete');
+
+        
 });
 
 require __DIR__.'/auth.php';

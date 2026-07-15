@@ -44,6 +44,10 @@
                         {{ number_format($duplicateRowsCount) }}
                     </div>
                     <div class="small">แถวซ้ำในต้นทาง</div>
+                    <a href="{{ route('data-quality.duplicates') }}"
+                    class="btn btn-sm btn-dark mt-3">
+                        ดูรายการข้อมูลซ้ำ
+                    </a>
                 </div>
             </div>
         </div>
@@ -56,6 +60,10 @@
                         {{ number_format($invalidCidCount) }}
                     </div>
                     <div class="small">รายการ</div>
+                    <a href="{{ route('data-quality.invalid-cids') }}"
+                    class="btn btn-sm btn-light mt-3">
+                        ดูรายการเลขบัตรผิด
+                    </a>
                 </div>
             </div>
         </div>
@@ -86,6 +94,10 @@
                         <strong>{{ number_format($missingPhone) }}</strong>
                     </p>
                 </div>
+                <a href="{{ route('data-quality.incomplete') }}"
+                class="btn btn-sm btn-warning mt-3">
+                    ดูรายการข้อมูลไม่ครบ
+                </a>
             </div>
         </div>
 

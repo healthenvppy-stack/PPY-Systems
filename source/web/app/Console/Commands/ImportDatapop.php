@@ -140,8 +140,13 @@ class ImportDatapop extends Command
                         'gender' => $row->sex,
                         'birth_date' => $birthDate,
                         'phone' => $row->contact ?: null,
-                        'status' => $row->status === 'เสียชีวิต' ? false : true,
-                    ];
+                        //'status' => $row->status === 'เสียชีวิต' ? false : true,
+                        'status' => match (trim((string) $row->status)) {
+                                'ย้ายออก' => 'moved_out',
+                                'เสียชีวิต' => 'deceased',
+                                default => 'active',
+                            },
+                        ];
 
                     if ($citizen) {
                         $citizen->update($citizenData);
@@ -160,7 +165,11 @@ class ImportDatapop extends Command
 
                     $isElderly = $age !== null && $age >= 60;
 
+                    //$receivesElderlyAllowance =
+                    //    trim((string) $row->welfare) === 'รับสวัสดิการ';
+
                     $receivesElderlyAllowance =
+                        $isElderly &&
                         trim((string) $row->welfare) === 'รับสวัสดิการ';
 
                     WelfareProfile::updateOrCreate(
@@ -255,7 +264,7 @@ class ImportDatapop extends Command
 
     private function splitFullName(string $fullName): array
     {
-        $titles = ['นาย', 'นางสาว', 'นาง', 'เด็กชาย', 'เด็กหญิง'];
+        $titles = ['นาย', 'นางสาว', 'นาง', 'เด็กชาย', 'เด็กหญิง' , 'ด.ช.' , 'ด.ญ.'];
 
         $title = null;
 

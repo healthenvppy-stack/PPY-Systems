@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <div class="row mb-3">
+    <!--<div class="row mb-3">
         <div class="col-md-3">
             <div class="card">
                 <div class="card-body">
@@ -20,7 +20,110 @@
                 </div>
             </div>
         </div>
+    </div>-->
+
+    <div class="mb-3">
+        <h3 class="mb-1">{{ $pageTitle }}</h3>
+        <small class="text-muted">
+            สรุปข้อมูลตามตัวกรองที่เลือก
+        </small>
     </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card text-white bg-primary border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">ประชากรทั้งหมด</div>
+                        <div class="display-6 fw-bold">
+                            {{ number_format($totalCitizens) }}
+                        </div>
+                        <div class="small">คน</div>
+                    </div>
+
+                    <div class="display-5 opacity-50">👥</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card text-white bg-success border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">ครัวเรือน</div>
+                        <div class="display-6 fw-bold">
+                            {{ number_format($totalHouseholds) }}
+                        </div>
+                        <div class="small">หลัง</div>
+                    </div>
+
+                    <div class="display-5 opacity-50">🏠</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card text-white bg-info border-0 shadow-sm h-100">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">ชาย</div>
+                        <div class="display-6 fw-bold">
+                            {{ number_format($totalMale) }}
+                        </div>
+                        <div class="small">
+                            {{ $totalCitizens > 0
+                                ? number_format(($totalMale / $totalCitizens) * 100, 2)
+                                : '0.00' }}%
+                        </div>
+                    </div>
+
+                    <div class="display-5 opacity-50">♂</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card text-white border-0 shadow-sm h-100"
+                style="background: linear-gradient(135deg, #ff718a, #ef5b78);">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small opacity-75">หญิง</div>
+                        <div class="display-6 fw-bold">
+                            {{ number_format($totalFemale) }}
+                        </div>
+                        <div class="small">
+                            {{ $totalCitizens > 0
+                                ? number_format(($totalFemale / $totalCitizens) * 100, 2)
+                                : '0.00' }}%
+                        </div>
+                    </div>
+
+                    <div class="display-5 opacity-50">♀</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- Add gragh show data by type your selected
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-white border-0 pt-3">
+            <strong>สัดส่วนประชากรชาย–หญิง</strong>
+
+            <div class="small text-muted">
+                แสดงตามชุดข้อมูลที่กำลังกรองอยู่
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div style="height: 280px;">
+                <canvas id="citizenGenderChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+***End show graph-->
 
     <div class="card">
         <div class="card-body">
@@ -117,5 +220,63 @@
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const chartCanvas = document.getElementById('citizenGenderChart');
+
+    if (!chartCanvas) {
+        return;
+    }
+
+    new Chart(chartCanvas, {
+        type: 'bar',
+
+        data: {
+            labels: ['ชาย', 'หญิง'],
+
+            datasets: [{
+                label: 'จำนวนประชากร',
+
+                data: [
+                    {{ (int) $totalMale }},
+                    {{ (int) $totalFemale }}
+                ],
+
+                backgroundColor: [
+                    'rgba(21, 174, 229, 0.85)',
+                    'rgba(239, 91, 120, 0.85)'
+                ],
+
+                borderRadius: 8,
+                borderWidth: 0
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+});
+</script>
 
 @endsection

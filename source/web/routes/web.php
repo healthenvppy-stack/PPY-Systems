@@ -14,6 +14,7 @@ use App\Http\Controllers\PublicHealthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelfareBenefitController;
 use App\Http\Controllers\DataQualityController;
+use App\Http\Controllers\AddressController;
 
 
 Route::get('/', function () {
@@ -110,6 +111,23 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/data-quality/incomplete', [DataQualityController::class, 'incompleteCitizens'])
         ->name('data-quality.incomplete');
+
+    Route::prefix('api/address')
+    ->name('api.address.')
+    ->group(function () {
+        Route::get('/provinces', [AddressController::class, 'provinces'])
+            ->name('provinces');
+
+        Route::get('/provinces/{province}/districts', [
+                AddressController::class,
+                'districts',
+            ])->name('districts');
+
+        Route::get('/districts/{district}/subdistricts', [
+                AddressController::class,
+                'subdistricts',
+            ])->name('subdistricts');
+        });
 
         
 });

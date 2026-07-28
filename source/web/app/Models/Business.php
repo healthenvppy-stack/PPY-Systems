@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Citizen;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Business extends Model
 {
@@ -82,5 +83,10 @@ class Business extends Model
     public function citizen()
     {
         return $this->belongsTo(Citizen::class);
+    }
+
+    public function licenseApplications(): HasMany
+    {
+        return $this->hasMany(LicenseApplication::class);
     }
 }

@@ -15,6 +15,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WelfareBenefitController;
 use App\Http\Controllers\DataQualityController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BusinessCategoryController;
+use App\Http\Controllers\BusinessTypeController;
+use App\Http\Controllers\ShopLicenseDashboardController;
+use App\Http\Controllers\LicenseTemplateController;
+use App\Http\Controllers\BusinessGroupController;
+use App\Http\Controllers\ShopLicense\BusinessController;
+use App\Http\Controllers\CitizenLookupController;
 
 
 Route::get('/', function () {
@@ -30,7 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('citizens', CitizenController::class);
+    Route::get(
+        '/citizens/lookup',
+        [CitizenLookupController::class, 'show']
+    )->name('citizens.lookup');
+
+    Route::resource('citizens', CitizenController::class)
+        ->where(['citizen' => '[0-9]+']);
 
     Route::resource('households', HouseholdController::class);
 
@@ -112,6 +125,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/data-quality/incomplete', [DataQualityController::class, 'incompleteCitizens'])
         ->name('data-quality.incomplete');
 
+    
+
     Route::prefix('api/address')
     ->name('api.address.')
     ->group(function () {
@@ -129,7 +144,30 @@ Route::middleware('auth')->group(function () {
             ])->name('subdistricts');
         });
 
-        
+    Route::middleware(['auth'])
+    ->prefix('shop-license')
+    ->name('shop-license.')
+    ->group(function () {
+
+        Route::get(
+                '/',
+                [ShopLicenseDashboardController::class, 'index']
+            )->name('dashboard');
+
+        Route::resource('business-groups', BusinessGroupController::class);
+
+        Route::resource('business-categories', BusinessCategoryController::class);
+
+        Route::resource('business-types', BusinessTypeController::class);
+
+        Route::resource(
+                'license-templates',
+                LicenseTemplateController::class
+            );
+        Route::resource('businesses', BusinessController::class);
+    });   
+    
+    
 });
 
 require __DIR__.'/auth.php';

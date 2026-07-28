@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
+
 class Citizen extends Model
 {
     protected $fillable = [
@@ -54,5 +55,10 @@ class Citizen extends Model
     public function welfareBenefits(): HasMany
     {
         return $this->hasMany(WelfareBenefit::class);
+    }
+
+    public function title(): BelongsTo
+    {
+        return $this->belongsTo(Title::class, 'title_id');
     }
 }
